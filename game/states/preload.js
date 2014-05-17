@@ -15,7 +15,7 @@ Preload.prototype = {
     
     this.load.image('yeoman', 'assets/yeoman-logo.png');
     
-    this.load.atlas('env', 'assets/map_tiles.png', 'assets/map_tiles.json');
+    this.load.atlas('maze', 'assets/map_tiles.png', 'assets/map_tiles.json');
   },
   create: function() {
     this.asset.cropEnabled = false;
