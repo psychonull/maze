@@ -12,8 +12,10 @@ Preload.prototype = {
 
     this.load.onLoadComplete.addOnce(this.onLoadComplete, this);
     this.load.setPreloadSprite(this.asset);
+    
     this.load.image('yeoman', 'assets/yeoman-logo.png');
-
+    
+    this.load.atlas('maze', 'assets/map_tiles.png', 'assets/map_tiles.json');
   },
   create: function() {
     this.asset.cropEnabled = false;
