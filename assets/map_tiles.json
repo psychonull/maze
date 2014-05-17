@@ -1,0 +1,15 @@
+{
+  "frames": [{
+    "filename": "left",
+    "frame": {"x":0,"y":0,"w":32,"h":32}
+  },{
+    "filename": "bottom",
+    "frame": {"x":32,"y":0,"w":32,"h":32}
+  },{
+    "filename": "cube",
+    "frame": {"x":0,"y":32,"w":32,"h":32}
+  },{
+    "filename": "corner",
+    "frame": {"x":32,"y":32,"w":32,"h":32}
+  }]
+}
