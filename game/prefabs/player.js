@@ -1,19 +1,46 @@
 'use strict';
 
-var Player = function(game, x, y, frame) {
+var Player = function(command, game, x, y, frame) {
   Phaser.Sprite.call(this, game, x, y, 'yeoman', frame);
-
-  // initialize your prefab here
+  this.command = command;
+  this.game = game;
+  this.game.physics.arcade.enable(this);
   
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
 
-Player.prototype.update = function() {
-  
-  // write your prefab's specific update code here
-  
+Player.prototype.update = function() {  
+  this.body.velocity.x = 0;
+  this.body.velocity.y = 0;
+  this.body.angularVelocity = 0;
+  this.anchor.setTo(0.5,0.5);
+
+  if (this.command.Left)
+  {
+      this.body.angularVelocity = -200;
+      this.command.Left = false;
+  }
+  if (this.command.Right)
+  {
+      this.body.angularVelocity = 200;
+      this.command.Right = false;
+  }
+
+  if (this.command.Up)
+  {
+       this.game.physics.arcade.velocityFromAngle(this.angle, 300, this.body.velocity);
+       this.command.Up = false;
+  }
+
+   if (this.command.Down)
+  {
+       this.game.physics.arcade.velocityFromAngle(this.angle, -300, this.body.velocity);
+       this.command.Down = false;
+  }
+
+
 };
 
 module.exports = Player;
