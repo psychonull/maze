@@ -71,7 +71,7 @@ Maze.prototype.initialize = function(){
       }
       if(type){
         //this.add(this.game.add.sprite(j * size, k * size, 'maze', type));
-        var sprite = this.create(j * this.tileSize, k * this.tileSize, 'maze', type);
+        var sprite = this.create((j * this.tileSize) + 16, (k * this.tileSize) + 16, 'maze', type);
         sprite.scale.x = this.scaleSprites;
         sprite.scale.y = this.scaleSprites;
         var col = this.getCollisionByType(type);
@@ -79,11 +79,41 @@ Maze.prototype.initialize = function(){
         sprite.body.setSize(col.w, col.h, col.x, col.y);
         sprite.body.immovable = true;
         if(type === 'corner'){
-          var fixSprite = this.create(j * this.tileSize, k * this.tileSize, '', type);
+          var fixSprite = this.create((j * this.tileSize) + 16, (k * this.tileSize) + 16, '', type);
           this.game.physics.enable(fixSprite, Phaser.Physics.ARCADE);
           var fixCol = this.getCollisionByType('bottom');
           fixSprite.body.setSize(fixCol.w, fixCol.h, fixCol.x, fixCol.y);
           fixSprite.body.immovable = true;
+        }
+        if(j==0)
+        {
+          var sprite = this.create((j * this.tileSize) - 48, (k * this.tileSize) + 16, 'maze', 'right');
+          sprite.scale.x = this.scaleSprites;
+          sprite.scale.y = this.scaleSprites;
+          var col = this.getCollisionByType('right');
+          this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
+          sprite.body.setSize(col.w, col.h, col.x, col.y);
+          sprite.body.immovable = true;
+        }
+        if(k==0)
+        {
+          var sprite = this.create((j * this.tileSize) + 16, (k * this.tileSize) - 48, 'maze', 'bottom');
+          sprite.scale.x = this.scaleSprites;
+          sprite.scale.y = this.scaleSprites;
+          var col = this.getCollisionByType('bottom');
+          this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
+          sprite.body.setSize(col.w, col.h, col.x, col.y);
+          sprite.body.immovable = true;
+        }
+        if(j==0 && k==0)
+        {
+          var sprite = this.create((j * this.tileSize) - 48, (k * this.tileSize) - 48, 'maze', 'cube');
+          sprite.scale.x = this.scaleSprites;
+          sprite.scale.y = this.scaleSprites;
+          var col = this.getCollisionByType('cube');
+          this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
+          sprite.body.setSize(col.w, col.h, col.x, col.y);
+          sprite.body.immovable = true;
         }
 
       }
@@ -120,6 +150,20 @@ Maze.prototype.getCollisionByType = function(type){
   else {
     throw new Error('fuck off');
   }
+};
+
+Maze.prototype.getStartingPoint = function(){
+  return {
+    x: this.x + this.tileSize / 2,
+    y: this.y + this.tileSize / 2
+  };
+};
+
+Maze.prototype.getEndingPoint = function(){
+  return {
+    x: this.x + (this.width -1) * this.tileSize + (this.tileSize / 2),
+    y: this.y + (this.height -1) * this.tileSize + (this.tileSize / 2)
+  };
 };
 
 

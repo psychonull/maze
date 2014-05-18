@@ -12,6 +12,8 @@ var Player = function(command, game, x, y, index) {
   this.scale.x = 0.5;
   this.scale.y = 0.5;
 
+  //this.body.setSize(64, 64, 0, 0);
+
   var anims = [];
   var idx = index*4;
   for(var i=idx; i<idx+4; i++){
@@ -55,8 +57,6 @@ Player.prototype.update = function() {
   	  this.game.physics.arcade.velocityFromAngle(this.angle, 200, this.body.velocity);
   	  this.command.Up = false;
   }
-
-
 };
 
 Player.prototype.render = function(){

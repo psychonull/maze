@@ -11,13 +11,22 @@ Play.prototype = {
   create: function() {
     this.game.stage.backgroundColor = '#FFFFFF';
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
+    
     var keys = keyboardKeys();
     var pads = Gamepad();
-    this.players = [];
 
-    this.maze = new Maze(this.game, 11, 11, 64, 1);//this.game.height / 50, this.game.width / 50);
+
+    this.maze = new Maze(this.game, 10, 10, 64, 1);//this.game.height / 50, this.game.width / 50);
     this.game.add.existing(this.maze);
+    
+    this.players = this.game.add.group();
+
+    var endingPosition = this.maze.getEndingPoint();
+    this.gameGoal = this.game.add.sprite(endingPosition.x, endingPosition.y,'yeoman');
+    this.game.add.existing(this.gameGoal);
+    this.game.physics.arcade.enable(this.gameGoal);
+    this.gameGoal.physicsBodyType = Phaser.Physics.ARCADE;
+    this.gameGoal.body.immovable = true;
 
     //Game pad controllers
     // var comm = new InputGamePad(this.game,0,0,pads[0]);
@@ -28,36 +37,47 @@ Play.prototype = {
     // this.game.add.existing(comm2);
     // this.players.push(this.game.add.existing(new Player(comm2, this.game, 0, 0, 'players', ships[1])));
     
-    var playersQty = 5;
-    for(var i=0; i<playersQty; i++){
+    var playersQty = 2;
+    for(var i=1; i<=playersQty; i++){
       var comm = new InputKeyboard(this.game, 0, 0, keys[i]);
       this.game.add.existing(comm);
-      this.players.push(
-        this.game.add.existing(new Player(comm, this.game, i*10, i*10, i))
-      );
+      this.players.add(new Player(comm, this.game, i*30, i*25, i));
     }
 
-    
   },
   update: function() {
-    this.game.physics.arcade.collide(this.players[0], this.maze);
-    this.game.physics.arcade.collide(this.players[1], this.maze);
-    this.game.physics.arcade.collide(this.players[2], this.maze);
-    this.game.physics.arcade.collide(this.players[3], this.maze);
-    this.game.physics.arcade.collide(this.players[4], this.maze);
+    this.game.physics.arcade.collide(this.players, this.maze); //, function(){}, this.collidePlayerVsMaze);
+    this.game.physics.arcade.collide(this.players, this.players); //, function(){}, this.collidePlayerVsPlayer);
+    this.game.physics.arcade.collide(this.players, this.gameGoal, this.gameEnd.bind(this))
   },
-  clickListener: function() {
+  gameEnd: function() {
     this.game.state.start('gameover');
   },
   render: function(){
     /*
-    var self = this;
-      this.maze.children.forEach(function(x){
-        self.game.debug.body(x);
+    for (var i=0; i < this.players.children.length; i++){
+      var player = this.players.children[i];
+      this.game.debug.body(player);
+    }
+    */
+  },
 
-      });
-*/
+  collidePlayerVsMaze: function(p, m){
+    var pCollisionCircle = new Phaser.Circle(p.body.center.x, p.body.center.y, 28);
+    var mCollisionRectangle = new Phaser.Rectangle(
+      m.x + m.body.offset.x, 
+      m.y + m.body.offset.y,
+      m.body.width,
+      m.body.height
+    );
+    return Phaser.Circle.intersectsRectangle(pCollisionCircle, mCollisionRectangle);
+  },
+  collidePlayerVsPlayer: function(p1, p2){
+    var p1CollisionCircle = new Phaser.Circle(p1.body.center.x, p1.body.center.y, 28);
+    var p2CollisionCircle = new Phaser.Circle(p2.body.center.x, p2.body.center.y, 28);
+    return Phaser.Circle.intersects(p1CollisionCircle, p2CollisionCircle);
   }
+  
 };
 
 module.exports = Play;
