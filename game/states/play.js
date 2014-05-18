@@ -1,5 +1,6 @@
 var Player = require('../prefabs/player'),
   InputKeyboard = require('../prefabs/inputKeyboard'),
+  keyboardKeys = require('../data/keyboard'), 
   maze = require('../utils/maze');
 
 'use strict';
@@ -8,30 +9,18 @@ Play.prototype = {
   create: function() {
     this.game.stage.backgroundColor = '#FFFFFF';
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    var config = {
-      left: Phaser.Keyboard.LEFT,
-      right: Phaser.Keyboard.RIGHT,
-      up: Phaser.Keyboard.UP,
-      down: Phaser.Keyboard.DOWN
-    };
-    var config2 = {
-      left: Phaser.Keyboard.A,
-      right: Phaser.Keyboard.D,
-      up: Phaser.Keyboard.W,
-      down: Phaser.Keyboard.S
-    };
-    this.command = new InputKeyboard(this.game, 0, 0,config);
-    this.player = new Player(this.command, this.game, 0,0, 'playerBlue');
-    this.command2 = new InputKeyboard(this.game, 0, 0,config2);
-    this.player2 = new Player(this.command2, this.game, 100,100, 'playerRed');
 
-    this.game.add.existing(this.player);
-    this.game.add.existing(this.command);
-    this.game.add.existing(this.player2);
-    this.game.add.existing(this.command2);
+    var keys = keyboardKeys();
+    var ships = ["green", "blue", "red", "yellow", "pink"];
+
+    for(var i=0; i<ships.length; i++){
+      var comm = new InputKeyboard(this.game, 0, 0, keys[i]);
+      this.game.add.existing(comm);
+      this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]));
+    }
 
     //var m = maze(Math.floor(this.game.width / 32), Math.floor(this.game.height / 32));//this.game.height / 50, this.game.width / 50);
-    var m = maze(12, 12);//this.game.height / 50, this.game.width / 50);
+    var m = maze(11, 11);//this.game.height / 50, this.game.width / 50);
     this.showMaze(m);
   },
   update: function() {
@@ -43,8 +32,8 @@ Play.prototype = {
   showMaze: function(m){
     console.log(m);
     var sp;
-    var scale = 1.75;
-    var size = 32 * scale;
+    var scale = 1;
+    var size = 64 * scale;
     // loop through horiz and verti arrays to find wall openings for each maze cell
     // for display, the walls are oriented on the bottom/right sides of the tile square
     for (var j= 0; j<m.x+1; j++) 
@@ -61,7 +50,7 @@ Play.prototype = {
         {
           // only horiz is true, so place vertical line tile
           //map.putTile(3, j+1, k+1);
-          sp = this.game.add.sprite(j * size, k * size, 'maze', 'left');
+          sp = this.game.add.sprite(j * size, k * size, 'maze', 'right');
         }
         else if ( !m.horiz[j][k] && !m.verti[j][k] && (j<m.x && k<m.y) )
         {

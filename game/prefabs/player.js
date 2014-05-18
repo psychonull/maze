@@ -1,11 +1,13 @@
 'use strict';
 
-var Player = function(command, game, x, y, res) {
-  Phaser.Sprite.call(this, game, x, y, res);
+var Player = function(command, game, x, y, key, frame) {
+  Phaser.Sprite.call(this, game, x, y, key, frame);
   this.command = command;
   this.game = game;
   this.game.physics.arcade.enable(this);
-  
+
+  this.scale.x = 0.35;
+  this.scale.y = 0.35;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
