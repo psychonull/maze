@@ -19,6 +19,8 @@ Player.prototype.update = function() {
   this.body.angularVelocity = 0;
   this.anchor.setTo(0.5,0.5);
 
+  this.game.physics.arcade.velocityFromAngle(this.angle, 100, this.body.velocity);
+
   if (this.command.Left)
   {
       this.body.angularVelocity = -300;
@@ -30,19 +32,17 @@ Player.prototype.update = function() {
       this.command.Right = false;
   }
 
-  if (this.command.Up)
-  {
-       this.game.physics.arcade.velocityFromAngle(this.angle, 100, this.body.velocity);
-       this.command.Up = false;
-  }
-
    if (this.command.Down)
   {
-       this.game.physics.arcade.velocityFromAngle(this.angle, -100, this.body.velocity);
+       this.game.physics.arcade.velocityFromAngle(this.angle, 50, this.body.velocity);
        this.command.Down = false;
   }
 
 
+};
+
+Player.prototype.render = function(){
+  //this.game.debug.body(this);
 };
 
 module.exports = Player;

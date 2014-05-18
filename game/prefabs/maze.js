@@ -7,6 +7,8 @@ var Maze = function(game, width, height, tileSize, scaleSprites) {
   this.height = height;
   this.tileSize = tileSize;
   this.scaleSprites = scaleSprites;
+  this.enableBody = true;
+  this.physicsBodyType = Phaser.Physics.ARCADE;
   this.initialize();
 
 };
@@ -17,10 +19,15 @@ Maze.prototype.constructor = Maze;
 Maze.prototype.update = function() {
 };
 
+Maze.prototype.render = function(){
+  alert(a);
+
+};
+
 Maze.prototype.initialize = function(){
   this.raw = generator(this.width, this.height);
   var m = this.raw;
-  for (var j= 0; j<m.x+1; j++) 
+  for (var j= 0; j<m.x+1; j++)
   {   
     for (var k=0; k<m.y+1; k++) 
     {
@@ -67,11 +74,55 @@ Maze.prototype.initialize = function(){
         var sprite = this.create(j * this.tileSize, k * this.tileSize, 'maze', type);
         sprite.scale.x = this.scaleSprites;
         sprite.scale.y = this.scaleSprites;
+        var col = this.getCollisionByType(type);
+        this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
+        sprite.body.setSize(col.w, col.h, col.x, col.y);
+        sprite.body.immovable = true;
 
       }
     }
 
   }
 };
+
+Maze.prototype.getCollisionByType = function(type){
+  if (type === 'right'){
+    return {
+      x: 48,
+      y: 0,
+      w: 16,
+      h: 64
+    };
+  }
+  else if (type === 'bottom'){
+    return {
+      x: 0,
+      y: 48,
+      w: 64,
+      h: 15
+    };
+  }
+  else if (type === 'corner'){
+    return {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0
+    };
+  }
+  else if (type === 'cube'){
+    return {
+      x: 48,
+      y: 48,
+      w: 16,
+      h: 16
+    };
+  }
+  else {
+    throw new Error('fuck off');
+  }
+};
+
+
 
 module.exports = Maze;

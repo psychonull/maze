@@ -12,21 +12,37 @@ Play.prototype = {
 
     var keys = keyboardKeys();
     var ships = ["green", "blue", "red", "yellow", "pink"];
+    this.players = [];
 
     for(var i=0; i<ships.length; i++){
       var comm = new InputKeyboard(this.game, 0, 0, keys[i]);
       this.game.add.existing(comm);
-      this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]));
+      this.players.push(
+        this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]))
+      );
     }
 
     this.maze = new Maze(this.game, 11, 11, 64, 1);//this.game.height / 50, this.game.width / 50);
     this.game.add.existing(this.maze);
   },
   update: function() {
-    
+    this.game.physics.arcade.collide(this.players[0], this.maze);
+    this.game.physics.arcade.collide(this.players[1], this.maze);
+    this.game.physics.arcade.collide(this.players[2], this.maze);
+    this.game.physics.arcade.collide(this.players[3], this.maze);
+    this.game.physics.arcade.collide(this.players[4], this.maze);
   },
   clickListener: function() {
     this.game.state.start('gameover');
+  },
+  render: function(){
+    /*
+    var self = this;
+      this.maze.children.forEach(function(x){
+        self.game.debug.body(x);
+
+      });
+*/
   }
 };
 

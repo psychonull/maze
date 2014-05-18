@@ -23,10 +23,13 @@ function maze(x,y) {
       n = n-1;
       next= neighbors[Math.floor(Math.random()*neighbors.length)];
       unvisited[next[0]+1][next[1]+1]= false;
-      if (next[0] == here[0])
+      if (next[0] == here[0]){
         horiz[next[0]][(next[1]+here[1]-1)/2]= true;
-      else 
-        verti[(next[0]+here[0]-1)/2][next[1]]= true;
+      }
+      else{ 
+        if(verti[(next[0]+here[0]-1)/2])
+          verti[(next[0]+here[0]-1)/2][next[1]]= true;
+      }
       path.push(here = next);
     } else 
       here = path.pop();
@@ -35,3 +38,4 @@ function maze(x,y) {
 }
 
 module.exports = maze;
+window.maze = maze;
