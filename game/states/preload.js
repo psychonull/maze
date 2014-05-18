@@ -15,6 +15,7 @@ Preload.prototype = {
     
     this.load.atlas('maze', 'assets/map_tiles.png', 'assets/map_tiles.json');
     this.load.atlas('players', 'assets/players.png', 'assets/players.json');
+    this.load.spritesheet('playerbug', 'assets/playerbug.png', 64, 64, 4);
   },
   create: function() {
     this.asset.cropEnabled = false;

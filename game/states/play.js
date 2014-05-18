@@ -34,7 +34,8 @@ Play.prototype = {
       var comm = new InputKeyboard(this.game, 0, 0, keys[i]);
       this.game.add.existing(comm);
       this.players.push(
-        this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]))
+        //this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]))
+        this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'playerbug', 0))
       );
     }
 

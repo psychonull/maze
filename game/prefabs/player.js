@@ -6,8 +6,11 @@ var Player = function(command, game, x, y, key, frame) {
   this.game = game;
   this.game.physics.arcade.enable(this);
 
-  this.scale.x = 0.35;
-  this.scale.y = 0.35;
+  this.scale.x = 0.5;
+  this.scale.y = 0.5;
+
+  this.animations.add('moving', [0,1,2,3], true);
+  this.animations.play('moving', 10, true);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
