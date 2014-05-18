@@ -41,46 +41,50 @@ Play.prototype = {
   },
   showMaze: function(m){
     console.log(m);
-    var size = 32;
+    var sp;
+    var scale = 1.75;
+    var size = 32 * scale;
     // loop through horiz and verti arrays to find wall openings for each maze cell
     // for display, the walls are oriented on the bottom/right sides of the tile square
     for (var j= 0; j<m.x+1; j++) 
     {   
       for (var k=0; k<m.y+1; k++) 
-      {     
+      {
         if ( !m.horiz[j][k] && m.verti[j][k] )
         {   
           // only verti is true, so place horizontal line tile
           //map.putTile(2, j+1, k+1);
-          this.game.add.sprite(j * size, k * size, 'maze', 'bottom');
+          sp = this.game.add.sprite(j * size, k * size, 'maze', 'bottom');
         }
         else if ( m.horiz[j][k] && !m.verti[j][k] )
         {
           // only horiz is true, so place vertical line tile
           //map.putTile(3, j+1, k+1);
-          this.game.add.sprite(j * size, k * size, 'maze', 'left');
-
+          sp = this.game.add.sprite(j * size, k * size, 'maze', 'left');
         }
         else if ( !m.horiz[j][k] && !m.verti[j][k] && (j<m.x && k<m.y) )
         {
           // both are false, so place horizontal/vertical line tile
           //map.putTile(4, j+1, k+1);
-          this.game.add.sprite(j * size, k * size, 'maze', 'corner');
-
+          sp = this.game.add.sprite(j * size, k * size, 'maze', 'corner');
         }
         else if ( !m.horiz[j][k] && !m.verti[j][k] )
         {
           // both are false outside the maze boundary
           //map.putTile(1, j+1, k+1);
           //this.game.add.sprite(j * size, k * size, 'maze', 'vertical');
-
         }           
         else
         {
           // both are true, so place empty tile (with corner filled for looks)
           //map.putTile(5, j+1, k+1);
-          this.game.add.sprite(j * size, k * size, 'maze', 'cube');
+          sp = this.game.add.sprite(j * size, k * size, 'maze', 'cube');
         }     
+
+        if (sp){
+          sp.scale.x = scale;
+          sp.scale.y = scale;
+        }
       }
     }
 
