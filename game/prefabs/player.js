@@ -38,6 +38,12 @@ Player.prototype.update = function() {
        this.command.Down = false;
   }
 
+  if (this.command.Up)
+  {
+  	  this.game.physics.arcade.velocityFromAngle(this.angle, 200, this.body.velocity);
+  	  this.command.Up = false;
+  }
+
 
 };
 

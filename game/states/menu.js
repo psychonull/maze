@@ -15,7 +15,11 @@ Menu.prototype = {
     this.titleText.anchor.setTo(0.5, 0.5);
 
     this.instructionsText = this.game.add.text(this.game.world.centerX, 400, 'Click anywhere to play "Click The Yeoman Logo"', { font: '16px Arial', fill: '#ffffff', align: 'center'});
-    this.instructionsText.anchor.setTo(0.5, 0.5);
+
+    this.playerText = this.game.add.text(this.game.world.centerX, 450, '2 Players', { font: '16px Arial', fill: '#ffffff', align: 'center'});
+    this.playerText.anchor.setTo(0.5, 0.5);
+    //this.playerText.events.onInputDown.add(function(){this}, this);
+
 
     this.sprite.angle = -20;
     this.game.add.tween(this.sprite).to({angle: 20}, 1000, Phaser.Easing.Linear.NONE, true, 0, 1000, true);
