@@ -78,6 +78,13 @@ Maze.prototype.initialize = function(){
         this.game.physics.enable(sprite, Phaser.Physics.ARCADE);
         sprite.body.setSize(col.w, col.h, col.x, col.y);
         sprite.body.immovable = true;
+        if(type === 'corner'){
+          var fixSprite = this.create(j * this.tileSize, k * this.tileSize, '', type);
+          this.game.physics.enable(fixSprite, Phaser.Physics.ARCADE);
+          var fixCol = this.getCollisionByType('bottom');
+          fixSprite.body.setSize(fixCol.w, fixCol.h, fixCol.x, fixCol.y);
+          fixSprite.body.immovable = true;
+        }
 
       }
     }
@@ -86,7 +93,7 @@ Maze.prototype.initialize = function(){
 };
 
 Maze.prototype.getCollisionByType = function(type){
-  if (type === 'right'){
+  if (type === 'right' || type === 'corner'){ // hackin :-{D
     return {
       x: 48,
       y: 0,
@@ -100,14 +107,6 @@ Maze.prototype.getCollisionByType = function(type){
       y: 48,
       w: 64,
       h: 15
-    };
-  }
-  else if (type === 'corner'){
-    return {
-      x: 0,
-      y: 0,
-      w: 0,
-      h: 0
     };
   }
   else if (type === 'cube'){
