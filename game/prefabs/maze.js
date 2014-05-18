@@ -152,6 +152,20 @@ Maze.prototype.getCollisionByType = function(type){
   }
 };
 
+Maze.prototype.getStartingPoint = function(){
+  return {
+    x: this.x + this.tileSize / 2,
+    y: this.y + this.tileSize / 2
+  };
+};
+
+Maze.prototype.getEndingPoint = function(){
+  return {
+    x: this.x + (this.width -1) * this.tileSize + (this.tileSize / 2),
+    y: this.y + (this.height -1) * this.tileSize + (this.tileSize / 2)
+  };
+};
+
 
 
 module.exports = Maze;
