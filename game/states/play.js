@@ -11,7 +11,6 @@ Play.prototype = {
   create: function() {
     this.game.stage.backgroundColor = '#FFFFFF';
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.gameGoal = this.game.add.sprite(500, 500,'yeoman')//this.game.add.sprite(this.game.width/2, this.game.height/2, 'yeoman');
     
     var keys = keyboardKeys();
     var pads = Gamepad();
@@ -20,7 +19,8 @@ Play.prototype = {
 
     this.maze = new Maze(this.game, 10, 10, 64, 1);//this.game.height / 50, this.game.width / 50);
     this.game.add.existing(this.maze);
-    
+    var endingPosition = this.maze.getEndingPoint();
+    this.gameGoal = this.game.add.sprite(endingPosition.x, endingPosition.y,'yeoman');
     this.game.add.existing(this.gameGoal);
     this.game.physics.arcade.enable(this.gameGoal);
     this.gameGoal.physicsBodyType = Phaser.Physics.ARCADE;
