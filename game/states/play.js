@@ -11,7 +11,8 @@ Play.prototype = {
   create: function() {
     this.game.stage.backgroundColor = '#FFFFFF';
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-
+    this.gameGoal = this.game.add.sprite(500, 500,'yeoman')//this.game.add.sprite(this.game.width/2, this.game.height/2, 'yeoman');
+    
     var keys = keyboardKeys();
     var pads = Gamepad();
     var ships = ["green", "blue", "red", "yellow", "pink"];
@@ -19,7 +20,11 @@ Play.prototype = {
 
     this.maze = new Maze(this.game, 11, 11, 64, 1);//this.game.height / 50, this.game.width / 50);
     this.game.add.existing(this.maze);
-
+    
+    this.game.add.existing(this.gameGoal);
+    this.game.physics.arcade.enable(this.gameGoal);
+    this.gameGoal.physicsBodyType = Phaser.Physics.ARCADE;
+    this.gameGoal.body.immovable = true;
     //Game pad controllers
     // var comm = new InputGamePad(this.game,0,0,pads[0]);
     // this.game.add.existing(comm);
@@ -46,8 +51,14 @@ Play.prototype = {
     this.game.physics.arcade.collide(this.players[2], this.maze);
     this.game.physics.arcade.collide(this.players[3], this.maze);
     this.game.physics.arcade.collide(this.players[4], this.maze);
+
+    this.game.physics.arcade.collide(this.players[0], this.gameGoal, this.gameEnd.bind(this));
+    this.game.physics.arcade.collide(this.players[1], this.gameGoal, this.gameEnd.bind(this));
+    this.game.physics.arcade.collide(this.players[2], this.gameGoal, this.gameEnd.bind(this));
+    this.game.physics.arcade.collide(this.players[3], this.gameGoal, this.gameEnd.bind(this));
+    this.game.physics.arcade.collide(this.players[4], this.gameGoal, this.gameEnd.bind(this));
   },
-  clickListener: function() {
+  gameEnd: function() {
     this.game.state.start('gameover');
   },
   render: function(){
