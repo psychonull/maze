@@ -1,7 +1,10 @@
 'use strict';
 
-var Player = function(command, game, x, y, key, frame) {
-  Phaser.Sprite.call(this, game, x, y, key, frame);
+var Player = function(command, game, x, y, index) {
+  Phaser.Sprite.call(this, game, x, y, 'players' , 0);
+
+  var bugs = ["black", "green", "brown", "violet", "red"];
+
   this.command = command;
   this.game = game;
   this.game.physics.arcade.enable(this);
@@ -9,7 +12,13 @@ var Player = function(command, game, x, y, key, frame) {
   this.scale.x = 0.5;
   this.scale.y = 0.5;
 
-  this.animations.add('moving', [0,1,2,3], true);
+  var anims = [];
+  var idx = index*4;
+  for(var i=idx; i<idx+4; i++){
+    anims.push(i);
+  }
+
+  this.animations.add('moving', anims, true);
   this.animations.play('moving', 10, true);
 };
 

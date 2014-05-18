@@ -14,7 +14,6 @@ Play.prototype = {
 
     var keys = keyboardKeys();
     var pads = Gamepad();
-    var ships = ["green", "blue", "red", "yellow", "pink"];
     this.players = [];
 
     this.maze = new Maze(this.game, 11, 11, 64, 1);//this.game.height / 50, this.game.width / 50);
@@ -29,13 +28,12 @@ Play.prototype = {
     // this.game.add.existing(comm2);
     // this.players.push(this.game.add.existing(new Player(comm2, this.game, 0, 0, 'players', ships[1])));
     
-
-    for(var i=0; i<ships.length; i++){
+    var playersQty = 5;
+    for(var i=0; i<playersQty; i++){
       var comm = new InputKeyboard(this.game, 0, 0, keys[i]);
       this.game.add.existing(comm);
       this.players.push(
-        //this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'players', ships[i]))
-        this.game.add.existing(new Player(comm, this.game, i*10, i*10, 'playerbug', 0))
+        this.game.add.existing(new Player(comm, this.game, i*10, i*10, i))
       );
     }
 
