@@ -9,7 +9,7 @@ Boot.prototype = {
 
     this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.game.scale.setScreenSize();
-    this.game.scale.startFullScreen(false);
+    this.game.scale.startFullScreen(true);
     this.game.scale.pageAlignHorizontally = true;
     this.game.scale.pageAlignVeritcally = true;
     this.game.scale.setShowAll();

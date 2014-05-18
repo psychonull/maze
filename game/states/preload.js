@@ -14,6 +14,8 @@ Preload.prototype = {
     this.load.setPreloadSprite(this.asset);
     
     this.load.image('yeoman', 'assets/yeoman-logo.png');
+    this.load.image('playerBlue', 'assets/playerBlue.png');
+    this.load.image('playerRed', 'assets/playerRed.png');
     
     this.load.atlas('maze', 'assets/map_tiles.png', 'assets/map_tiles.json');
   },

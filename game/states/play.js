@@ -6,6 +6,7 @@ var Player = require('../prefabs/player'),
 function Play() {}
 Play.prototype = {
   create: function() {
+    this.game.stage.backgroundColor = '#FFFFFF';
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     var config = {
       left: Phaser.Keyboard.LEFT,
@@ -20,9 +21,9 @@ Play.prototype = {
       down: Phaser.Keyboard.S
     };
     this.command = new InputKeyboard(this.game, 0, 0,config);
-    this.player = new Player(this.command, this.game, 0,0, undefined);
+    this.player = new Player(this.command, this.game, 0,0, 'playerBlue');
     this.command2 = new InputKeyboard(this.game, 0, 0,config2);
-    this.player2 = new Player(this.command2, this.game, 100,100, undefined);
+    this.player2 = new Player(this.command2, this.game, 100,100, 'playerRed');
 
     this.game.add.existing(this.player);
     this.game.add.existing(this.command);
